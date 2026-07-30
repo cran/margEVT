@@ -1,5 +1,5 @@
-afde7cb1cbfd626ed8a68b58478a0cf2 *DESCRIPTION
-acd90593ed31f14dde5a30e8189a975d *NAMESPACE
+829e516d6a65fba07adc5d2eca6a246e *DESCRIPTION
+1438e74e2df2d65fdae542fa27086f7d *NAMESPACE
 7d9e45a55f943c98a4f025463d9da8de *R/backtest.R
 66bd290b3a98b13baf50700db6a09b59 *R/bootstrap.R
 5d904096aca9d12884c3847513ea8996 *R/covariate.R
@@ -10,7 +10,7 @@ f538ab81f856078b195911d967bef42a *R/generator.R
 6996872973eb24dc4bedea40e6ced905 *R/marginalize.R
 60bcfa1d809b3b53af2ede8c27b01b25 *R/params.R
 3a59990b623e2958f4c43f1ea37cc6c6 *R/select.R
-a7992f8fe2de3d8fcb47a173c8ff0dbd *R/utils.R
+4464ae8a87c766249fa4e0d2b5762ae3 *R/utils.R
 888f6d2950cb041228c9cf706966654e *README.md
 506bbc834cefcdc8d26b75fa13de1bdd *inst/CITATION
 9bf4f553e9b7558d3bd0acf836514947 *man/active_covariates.Rd
@@ -26,6 +26,7 @@ fe043b3f19e4ec844de2fb58aaef813b *man/fit_nhpp.Rd
 69083f347a3cf223404dd1118f99f6ea *man/is_nhpp_fit.Rd
 e2df2c7aaf956acab38af342a2fdf9ee *man/marginalize.Rd
 37656c743769fb16e9aca254b030c395 *man/n_exceedances.Rd
+7f5f8496b1c8eeee66a83d0047fad54c *man/plot.nhpp_fit.Rd
 a9c43f8c735143e7c74da6fe5b23bcce *man/pp_grad.Rd
 50d2e4cbf48b210c5e8ccd555f32eed2 *man/pp_nllh.Rd
 9a33cfbeb2ae4d505eb34d528218ccbc *man/predict_params.Rd
