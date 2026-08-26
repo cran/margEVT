@@ -15,14 +15,42 @@ make_utils_fit <- function(seed = 1L) {
 # -----------------------------------------------------------------------------
 # summary.nhpp_fit Tests
 # -----------------------------------------------------------------------------
+test_that("preserved seed removes a temporary global seed", {
+  had_seed <- exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+  if (had_seed)
+    old_seed <- get(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+  on.exit({
+    if (had_seed) assign(".Random.seed", old_seed, envir = .GlobalEnv)
+  }, add = TRUE)
+
+  if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+    rm(".Random.seed", envir = .GlobalEnv)
+  value <- margEVT:::.with_preserved_seed(123L, stats::runif(1L))
+
+  expect_true(is.finite(value))
+  expect_false(exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE))
+})
+
 test_that("summary.nhpp_fit runs without error", {
   fit <- make_utils_fit()
   expect_output(summary(fit), regexp = "nhpp_fit summary")
 })
 
+test_that("summary.nhpp_fit validates its activity tolerance", {
+  fit <- make_utils_fit()
+  expect_error(summary(fit, tol = 0), "tol")
+})
+
 test_that("summary.nhpp_fit shows threshold", {
   fit <- make_utils_fit()
   expect_output(summary(fit), regexp = "Threshold")
+})
+
+test_that("summary.nhpp_fit inherits the fitted activity tolerance", {
+  fit <- make_utils_fit()
+  fit$active_tol <- 1e-2
+  fit$par["mu.x"] <- 5e-3
+  expect_output(summary(fit), regexp = "Shrunk to zero : mu.x")
 })
 
 test_that("summary.nhpp_fit handles Hessian diagnostic branches (Mocked)", {
@@ -75,6 +103,21 @@ test_that("bic_nhpp returns a finite scalar", {
 
 test_that("bic_nhpp rejects non-nhpp_fit objects", {
   expect_error(bic_nhpp(list(a = 1)), regexp = "must be an nhpp_fit object")
+})
+
+test_that("bic_nhpp validates its activity tolerance", {
+  fit <- make_utils_fit()
+  expect_error(bic_nhpp(fit, tol = 0), "tol")
+})
+
+test_that("bic_nhpp supports legacy fits without activity tolerance", {
+  fit <- make_utils_fit()
+  fit$active_tol <- NULL
+
+  expected <- 2 * fit$nllh_raw +
+    sum(margEVT:::.active_parameter_mask(fit, 1e-2)) * log(fit$n_exc)
+
+  expect_equal(bic_nhpp(fit), expected)
 })
 
 test_that("bic_nhpp handles non-finite raw likelihood", {
@@ -138,4 +181,54 @@ test_that("rl_table with multiple scenarios has correct rows", {
 test_that("rl_table rejects wrong input", {
   expect_error(rl_table(list()), regexp = "data frame")
   expect_error(rl_table(data.frame(a = 1)), regexp = "columns")
+})
+
+# -----------------------------------------------------------------------------
+# plot.nhpp_fit Tests
+# -----------------------------------------------------------------------------
+test_that("plot.nhpp_fit runs intensity plot without error", {
+  fit <- make_utils_fit()
+  expect_silent(plot(fit, type = "intensity"))
+})
+
+test_that("plot.nhpp_fit runs fitted plot for stationary shape model without error", {
+  fit <- make_utils_fit()
+  expect_silent(plot(fit, type = "fitted"))
+})
+
+test_that("plot.nhpp_fit runs fitted plot for non-stationary shape model without error", {
+  set.seed(1L)
+  n  <- 300L
+  df <- data.frame(
+    y     = c(stats::rexp(n, 0.3), stats::runif(30L, 5, 20)),
+    x     = stats::rnorm(n + 30L),
+    trend = seq_len(n + 30L) / (n + 30L)
+  )
+  fit_xi <- fit_nhpp(df, threshold = 4, loc_vars = "x", shape_vars = "trend",
+                     penalty = "none", verbose = FALSE)
+  expect_silent(plot(fit_xi, type = "fitted"))
+})
+
+test_that("plot.nhpp_fit rejects invalid plot type", {
+  fit <- make_utils_fit()
+  expect_error(plot(fit, type = "invalid_type"))
+})
+
+test_that("plot.nhpp_fit handles completely stationary model for fitted plot", {
+  set.seed(1L)
+  n  <- 100L
+  df <- data.frame(y = c(stats::rexp(n, 0.3), stats::runif(20L, 5, 10)))
+  fit_stat <- fit_nhpp(df, threshold = 4, penalty = "none", verbose = FALSE)
+  expect_silent(plot(fit_stat, type = "fitted"))
+})
+
+test_that("plot.nhpp_fit plots non-stationary scale parameter in fitted plot", {
+  set.seed(1L)
+  n  <- 100L
+  df <- data.frame(
+    y = c(stats::rexp(n, 0.3), stats::runif(20L, 5, 10)),
+    x = stats::rnorm(n + 20L)
+  )
+  fit_sig <- fit_nhpp(df, threshold = 4, scale_vars = "x", penalty = "none", verbose = FALSE)
+  expect_silent(plot(fit_sig, type = "fitted"))
 })
