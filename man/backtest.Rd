@@ -17,6 +17,7 @@ backtest(
   interactions = list(),
   year_col = "year",
   min_obs_year = NULL,
+  seed = 2024L,
   verbose = TRUE
 )
 }
@@ -55,6 +56,9 @@ within each window. Default \code{200L}.}
 
 \item{min_obs_year}{Integer. Minimum observations in a validation year
 for it to be included. Default \code{as.integer(n_obs * 0.8)}.}
+
+\item{seed}{Integer. Seed used for empirical annual-block sampling.
+Default \code{2024L}. Each validation window uses a distinct derived seed.}
 
 \item{verbose}{Logical. Print progress. Default \code{TRUE}.}
 }

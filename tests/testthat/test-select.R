@@ -120,6 +120,34 @@ test_that("bic selection throws error when all coarse grid fits fail", {
   )
 })
 
+test_that("bic selection rejects fits with invalid operational likelihood", {
+  df <- make_select_df()
+  dm <- margEVT:::build_design_matrices(
+    df, loc_vars = "x", scale_vars = NULL,
+    shape_vars = NULL, free_vars = NULL
+  )
+  init <- rep(0, ncol(dm$X_mu) + ncol(dm$X_sigma) + ncol(dm$X_xi))
+
+  testthat::local_mocked_bindings(
+    .fit_at_lambda = function(...) list(
+      converged = TRUE,
+      par = init,
+      nllh_pen = 0,
+      nllh_raw = 0,
+      hessian = NULL
+    ),
+    pp_nllh = function(...) Inf
+  )
+
+  expect_error(
+    margEVT:::.select_lambda_bic(
+      dm = dm, y = df$y, threshold = 4, alpha = 1,
+      penalize_shape = TRUE, init = init, verbose = FALSE
+    ),
+    regexp = "all coarse grid fits failed"
+  )
+})
+
 test_that("bic selection stops early when valley is found (Mocked via testthat 3)", {
   s <- make_select_df()
   dm <- margEVT:::build_design_matrices(s, loc_vars = "x", scale_vars = NULL, shape_vars = NULL, free_vars = NULL)
@@ -128,18 +156,25 @@ test_that("bic selection stops early when valley is found (Mocked via testthat 3
   counter <- 0
   mock_fit <- function(...) {
     counter <<- counter + 1
-    nllh <- 100 + counter * 40
 
     list(
       converged = TRUE,
-      par = rep(1, length(init)),
-      nllh_pen = nllh,
-      nllh_raw = nllh,
+      # Encode the path position in the fitted vector. Since selection now
+      # recomputes the unpenalized likelihood at the thresholded operational
+      # estimator, the likelihood mock below reads this value.
+      par = rep(counter, length(init)),
+      nllh_pen = 0,
+      nllh_raw = 0,
       hessian = NULL
     )
   }
 
-  testthat::local_mocked_bindings(.fit_at_lambda = mock_fit)
+  mock_nllh <- function(par, ...) 100 + unname(par[1]) * 40
+
+  testthat::local_mocked_bindings(
+    .fit_at_lambda = mock_fit,
+    pp_nllh = mock_nllh
+  )
 
   expect_message(
     fit <- margEVT:::.select_lambda_bic(

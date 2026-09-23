@@ -116,6 +116,20 @@ test_that("missing 'y' column in data throws informative error", {
   )
 })
 
+test_that("backtest rejects missing active covariates", {
+  s <- make_backtest_df()
+  # Make the intended active-set membership deterministic for this validation
+  # test, independently of the random fitted coefficient in the helper data.
+  s$fit$par["mu.x"] <- 1
+  bad <- s$df
+  bad$x <- NULL
+
+  expect_error(
+    backtest(s$fit, bad, varname = "y", n_obs = 50L, verbose = FALSE),
+    regexp = "required covariates not found in data: x"
+  )
+})
+
 test_that("not enough years throws informative error", {
   s      <- make_backtest_df()
   df_sub <- s$df[s$df$year <= 1995, ]
@@ -234,6 +248,22 @@ test_that("backtest validates return periods and window controls", {
   )
   expect_error(backtest(s$fit, s$df, "y", n_boot = 0), "n_boot")
   expect_error(backtest(s$fit, s$df, "y", min_obs_year = 0), "min_obs_year")
+  expect_error(backtest(s$fit, s$df, "y", seed = Inf), "seed")
+})
+
+test_that("backtest preserves the caller RNG stream", {
+  s <- make_backtest_df()
+  set.seed(765L)
+  expected <- runif(2L)
+
+  set.seed(765L)
+  first <- runif(1L)
+  backtest(s$fit, s$df, varname = "y", TRs = 2, n_obs = 50L,
+           window_years = 10L, min_train_years = 15L,
+           n_boot = 10L, seed = 123L, verbose = FALSE)
+  second <- runif(1L)
+
+  expect_equal(c(first, second), expected)
 })
 
 test_that("backtest rejects a year column without valid values", {

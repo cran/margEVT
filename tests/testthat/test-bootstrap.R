@@ -71,7 +71,7 @@ test_that("bootstrap_coef estimates match fit$par", {
   s   <- make_boot_fit()
   res <- bootstrap_coef(s$fit, s$df, R = 10L, verbose = FALSE)
   expect_equal(res$estimate,
-               unname(round(s$fit$par[res$parameter], 5L)))
+               unname(round(s$fit$par_oper[res$parameter], 5L)))
 })
 
 test_that("bootstrap refits preserve the original design and free variables", {
@@ -120,6 +120,31 @@ test_that("bootstrap_rl and bootstrap_coef input validations", {
   expect_error(bootstrap_coef(s$fit, df_few, R = 2), regexp = "fewer than 5 exceedances")
 })
 
+test_that("bootstrap functions reject non-finite response values", {
+  s <- make_boot_fit()
+  bad <- s$df
+  bad$y[1L] <- NA_real_
+
+  expect_error(
+    bootstrap_rl(s$fit, bad, TRs = 10, R = 2L, verbose = FALSE),
+    regexp = "data\\$y.*finite numeric values"
+  )
+  expect_error(
+    bootstrap_coef(s$fit, bad, R = 2L, verbose = FALSE),
+    regexp = "data\\$y.*finite numeric values"
+  )
+})
+
+test_that("GPD simulation rejects non-finite generated excesses", {
+  expect_error(
+    margEVT:::.simulate_exceedances(
+      mu_t = 4, sigma_t = 1, xi_t = 1e308,
+      threshold = 4, exc_idx = 1L
+    ),
+    regexp = "generated an invalid GPD excess"
+  )
+})
+
 test_that("bootstrap_rl and bootstrap_coef print verbose progress messages", {
   s <- make_boot_fit()
   expect_message(bootstrap_rl(s$fit, s$df, TRs = 10, R = 1L, approach = "A", verbose = TRUE), regexp = "replicate 1")
@@ -155,6 +180,7 @@ test_that("bootstrap catches invalid GPD scale limit", {
   s$fit$fitted$mu    <- rep(0.0, nrow(s$df))
   s$fit$fitted$sigma <- rep(exp(-50.0), nrow(s$df))
   s$fit$fitted$xi    <- rep(-10.0, nrow(s$df))
+  s$fit$fitted_oper <- s$fit$fitted
 
   expect_error(
     bootstrap_coef(s$fit, s$df, R = 2, verbose = FALSE),

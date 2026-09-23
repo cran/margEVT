@@ -1,3 +1,39 @@
+# margEVT 0.3.0
+
+## Estimation consistency and reproducibility
+
+- Added `lambda_scaling` to `fit_nhpp()`. Automatic BIC selection can retain
+  the score-calibrated block penalties introduced in 0.2.0 or use a common
+  scalar penalty to reproduce the estimation convention used in the
+  dissertation analyses.
+- Corrected automatic BIC selection so that both the unpenalized likelihood
+  and the effective parameter count are evaluated at the thresholded
+  operational estimator. Smooth optimizer solutions, rather than thresholded
+  vectors, are retained as warm starts along the regularization path.
+- Fitted objects now store both the smooth optimizer solution (`par`) and the
+  operational activity-thresholded solution (`par_oper`). Downstream parameter
+  prediction uses the operational estimator by default, while
+  `coef(fit, operational = FALSE)` preserves access to the smooth solution.
+- Coefficient bootstrap replicates now use the operational estimator, allowing
+  percentile distributions to retain an atom at zero.
+- Univariate covariate generators now fit a genuine stable AR model selected
+  by BIC instead of padding the series with an artificial noise coordinate.
+- Covariate simulation now supports exact Gaussian stationary-state
+  initialization, while retaining zero-state burn-in as an explicit
+  sensitivity option.
+
+## Validation and defensive checks
+
+- Return-level integration now rejects non-finite fitted parameters and
+  non-positive scales instead of silently omitting invalid contributions.
+- Parametric and empirical marginalization verify all direct and interaction
+  input covariates before constructing annual trajectories.
+- Prediction matrices are rebuilt directly from the stored design columns,
+  avoiding formula reinterpretation of non-syntactic or interaction-like
+  column names.
+- Package metadata and the dissertation citation were synchronized for the
+  0.3.0 development line.
+
 # margEVT 0.2.0
 
 ## Consistency and temporal resolution
