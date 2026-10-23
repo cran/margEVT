@@ -2,7 +2,7 @@ Package: margEVT
 Type: Package
 Title: Regularized Point Processes and Stochastic Marginalization for
         Extremes
-Version: 0.4.0
+Version: 0.5.0
 Authors@R: c(
     person("Rodrigo Fonseca", "Villa", email = "rodrigo03.villa@gmail.com",
            role = c("aut", "cre"),
@@ -10,7 +10,8 @@ Authors@R: c(
     )
 Description: Implements a non-stationary extreme value analysis framework
     by coupling a covariate-driven non-homogeneous Poisson process (NHPP)
-    with (adaptive) elastic-net regularization and analytical gradients.
+    with (adaptive) elastic-net regularization, analytical gradients and a
+    lower bound on the shape parameter.
     Provides methods for estimating conditional return levels and
     unconditional (marginalized) return levels via parametric stochastic
     integration over stable vector autoregressive VAR(p) covariate
@@ -29,9 +30,9 @@ Suggests: knitr, rmarkdown, testthat (>= 3.0.0), vars
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2026-10-13 17:17:13 UTC; rodri
+Packaged: 2026-10-23 18:50:43 UTC; rodri
 Author: Rodrigo Fonseca Villa [aut, cre] (ORCID:
     <https://orcid.org/0009-0005-2938-2270>)
 Maintainer: Rodrigo Fonseca Villa <rodrigo03.villa@gmail.com>
 Repository: CRAN
-Date/Publication: 2026-10-13 23:00:15 UTC
+Date/Publication: 2026-10-23 20:10:02 UTC

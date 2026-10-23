@@ -414,13 +414,13 @@ penalty.</p>
 <span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt;   Weights      : adaptive: mle</span></span>
 <span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;   Alpha        : 1</span></span>
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;   Converged    : TRUE</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;   nllh (raw)   : 162.3987</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;   nllh (raw)   : 162.3988</span></span>
 <span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;   nllh (pen)   : 165.7571</span></span>
 <span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;   obs/year     : 52.00</span></span>
 <span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt;   Active params: 6 of 9</span></span>
 <span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt;   Coefficients (non-zero):</span></span>
 <span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt;    mu.(Intercept)           mu.cos1           mu.sen1              mu.x </span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt;          31.60851           4.04716           0.33637           2.48863 </span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt;          31.60850           4.04716           0.33637           2.48864 </span></span>
 <span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt; sigma.(Intercept)    xi.(Intercept) </span></span>
 <span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;           1.01718          -0.03196</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">summary</span>(fit)</span>
@@ -433,17 +433,17 @@ penalty.</p>
 <span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt;   Penalize shape : TRUE</span></span>
 <span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt;   obs/year       : 52.00</span></span>
 <span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt;   Converged      : TRUE</span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt;   KKT violation  : 8.46e-08 (per exceedance)</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt;   nllh (raw)     : 162.3987</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt;   KKT violation  : 2.02e-06 (per exceedance)</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt;   nllh (raw)     : 162.3988</span></span>
 <span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt;   nllh (pen)     : 165.7571</span></span>
 <span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt;   Exceedances    : 208 | BIC: 356.888</span></span>
 <span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt;   Active coefficients (6 of 9):</span></span>
 <span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt;                   Estimate</span></span>
-<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; mu.(Intercept)    31.60851</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt; mu.(Intercept)    31.60850</span></span>
 <span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt; mu.cos1            4.04716</span></span>
 <span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt; mu.sen1            0.33637</span></span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; mu.x               2.48863</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt; mu.x               2.48864</span></span>
 <span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt; sigma.(Intercept)  1.01718</span></span>
 <span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt; xi.(Intercept)    -0.03196</span></span>
 <span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -485,13 +485,13 @@ bands.</p>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">cos1 =</span> <span class="dv">1</span>, <span class="at">sen1 =</span> <span class="dv">0</span>, <span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
 <span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>                                  <span class="at">z =</span> <span class="dv">0</span>))</span>
 <span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="co">#&gt; $mu</span></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; [1] 33.16704 35.65567 38.14430</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co">#&gt; [1] 33.16702 35.65566 38.14430</span></span>
 <span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="co">#&gt; $sigma</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; [1] 2.765376 2.765376 2.765376</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; [1] 2.765375 2.765375 2.765375</span></span>
 <span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="co">#&gt; $xi</span></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; [1] -0.03196123 -0.03196123 -0.03196123</span></span></code></pre></div>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; [1] -0.03196091 -0.03196091 -0.03196091</span></span></code></pre></div>
 </div>
 <div id="marginal-return-levels" class="section level2">
 <h2>Marginal return levels</h2>
@@ -513,7 +513,7 @@ errors of the roots are reported for B and C.</p>
 <span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="fu">rl_table</span>(rl)</span>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co">#&gt;   approach            scenario      T2     T10     T50    T100</span></span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="co">#&gt; 1        A             neutral 33.9255 38.9870 43.1849 44.8952</span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; 2        A            positive 36.4142 41.4756 45.6735 47.3839</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="co">#&gt; 2        A            positive 36.4141 41.4756 45.6735 47.3839</span></span>
 <span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co">#&gt; 3        B       parametric_mc 34.7541 40.0346 44.3141 46.0518</span></span>
 <span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co">#&gt; 4        C empirical_bootstrap 34.8285 40.0566 44.3210 46.0551</span></span>
 <span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="fu">plot</span>(rl)</span></code></pre></div>
@@ -534,8 +534,8 @@ random-number stream, so results are identical for any number of
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>                   <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>ci</span>
 <span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">#&gt;   TR  RL_est  CI_low CI_high n_ok</span></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; 1 10 40.1088 38.4451 41.6862   20</span></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; 2 50 44.3752 42.2021 47.5903   20</span></span></code></pre></div>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">#&gt; 1 10 40.1088 38.4451 41.6861   20</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="co">#&gt; 2 50 44.3752 42.2020 47.5903   20</span></span></code></pre></div>
 <p>The intervals are conditional on the selected model and do not
 include model-selection uncertainty. In applications, use several
 hundred replicates and <code>cores &gt; 1</code>.</p>
@@ -553,9 +553,12 @@ no validation data enters the training fit;
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>               <span class="at">window_years =</span> <span class="dv">10</span>, <span class="at">min_train_years =</span> <span class="dv">20</span>, <span class="at">n_boot =</span> <span class="dv">100</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>               <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>bt<span class="sc">$</span>binom_tests</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt;   TR expected observed n_exceedances n_total p_value not_rejected calibrated</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; 1  2      0.5     0.45             9      20  0.8238         TRUE       TRUE</span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; 2  5      0.2     0.10             2      20  0.4019         TRUE       TRUE</span></span></code></pre></div>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="co">#&gt;   approach TR expected observed n_exceedances n_total p_value not_rejected</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="co">#&gt; 1        C  2      0.5     0.45             9      20  0.8238         TRUE</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="co">#&gt; 2        C  5      0.2     0.10             2      20  0.4019         TRUE</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="co">#&gt;   calibrated</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="co">#&gt; 1       TRUE</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co">#&gt; 2       TRUE</span></span></code></pre></div>
 </div>
 <div id="reproducibility" class="section level2">
 <h2>Reproducibility</h2>
@@ -564,7 +567,7 @@ caller’s random-number stream unchanged. The full session used here:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()<span class="sc">$</span>R.version<span class="sc">$</span>version.string</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;R version 4.3.0 (2023-04-21 ucrt)&quot;</span></span>
 <span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">&quot;margEVT&quot;</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] &#39;0.4.0&#39;</span></span></code></pre></div>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a><span class="co">#&gt; [1] &#39;0.5.0&#39;</span></span></code></pre></div>
 </div>
 
 
